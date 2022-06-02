@@ -1,6 +1,8 @@
-// [{"title":"auto","id":1},{"title":"camioneta","id":2},{"title":"moto","id":3}]
+const productsContainer = [{"title":"auto","id":1},{"title":"camioneta","id":2},{"title":"moto","id":3}];
+
 const fs = require('fs');
-const productsFile = JSON.parse(fs.readFileSync('./products.txt', 'utf-8'));
+let productsFile = fs.writeFileSync('./products.txt', JSON.stringify(productsContainer));
+productsFile = JSON.parse(fs.readFileSync('./products.txt', 'utf-8'));
 
 class Container {
     save(box) {
