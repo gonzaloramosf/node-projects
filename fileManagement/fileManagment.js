@@ -1,48 +1,87 @@
+const fs = require('fs');
 const productsContainer = [{"title":"auto","id":1},{"title":"camioneta","id":2},{"title":"moto","id":3}];
 
-const fs = require('fs');
-let productsFile = fs.writeFileSync('./products.txt', JSON.stringify(productsContainer));
-productsFile = JSON.parse(fs.readFileSync('./products.txt', 'utf-8'));
-
 class Container {
-    save(box) {
-        box.id = productsFile.length + 1;
-        productsFile.push(box);
-        fs.writeFileSync('./products.txt', JSON.stringify(productsFile));
-        return box.id;
-    }
-
-    getById(id) {
-        let getItem = productsFile.filter(item => item.id === id);
-        if(getItem.length === 1) {
-            return getItem;
-        } else {
-            return null;
+    async save(box) {
+        try {
+            let productsFile = await fs.promises.writeFile('./products.txt', JSON.stringify(productsContainer));
+            productsFile = await fs.promises.readFile('./products.txt', 'utf-8');
+            productsFile = JSON.parse(productsFile);
+            box.id = productsFile.length + 1;
+            productsFile.push(box);
+            console.log(productsFile);
+            fs.promises.writeFile('./products.txt', JSON.stringify(productsFile));
+            return productsFile;
+        } catch (error) {
+            console.log(`Error save method: ${error}`);
         }
     }
 
-    getAll() {
-        return productsFile;
-    }
-
-    deleteById(id) {
-        for(let i=0; i < productsFile.length; i++) {
-            if(productsFile[i].id === id) {
-                productsFile.splice(i, 1);
-            } 
+    async getById(id) {
+        try {
+            let productsFile = await fs.promises.writeFile('./products.txt', JSON.stringify(productsContainer));
+            productsFile = await fs.promises.readFile('./products.txt', 'utf-8');
+            productsFile = JSON.parse(productsFile);
+            let getItem = productsFile.filter(item => item.id === id);
+            if(getItem.length === 1) {
+                console.log(getItem);
+                return getItem;
+            } else {
+                console.log("Get by id " + null);
+                return null;
+            }   
+        } catch (error) {
+            console.log(`Error getById method: ${error}`);
         }
-        return productsFile;   
     }
 
-    deleteAll() {
-        productsFile.splice(0, productsFile.length);
-        return productsFile;
+    async getAll() {
+        try {
+            let productsFile = await fs.promises.writeFile('./products.txt', JSON.stringify(productsContainer));
+            productsFile = await fs.promises.readFile('./products.txt', 'utf-8');
+            productsFile = JSON.parse(productsFile);
+            console.log(productsFile);
+            return productsFile;   
+        } catch (error) {
+            console.log(`Error getAll method: ${error}`);
+        }
+    }
+
+    async deleteById(id) {
+        try {
+            let productsFile = await fs.promises.writeFile('./products.txt', JSON.stringify(productsContainer));
+            productsFile = await fs.promises.readFile('./products.txt', 'utf-8');
+            productsFile = JSON.parse(productsFile);
+            for(let i=0; i < productsFile.length; i++) {
+                if(productsFile[i].id === id) {
+                    productsFile.splice(i, 1);
+                } 
+            }
+            console.log(productsFile);
+            await fs.promises.writeFile('./products.txt', JSON.stringify(productsFile));
+            return productsFile;      
+        } catch (error) {
+            console.log(`Error deleteById method: ${error}`);
+        }
+    }
+
+    async deleteAll() {
+        try {
+            let productsFile = await fs.promises.writeFile('./products.txt', JSON.stringify(productsContainer));
+            productsFile = await fs.promises.readFile('./products.txt', 'utf-8');
+            productsFile = JSON.parse(productsFile);
+            productsFile.splice(0, productsFile.length);
+            console.log(productsFile);
+            return productsFile;
+        } catch (error) {
+            console.log(`Error deleteAll method: ${error}`);
+        }
     }
 }
 
 let box = new Container();
-console.log(box.save({title: 'barco', id: null}));
-console.log(box.getById(7));
-console.log(box.getAll());
-console.log(box.deleteById(2));
-console.log(box.deleteAll());
+box.save({title: 'barco', id: null});
+box.getById(2);
+box.getAll();
+box.deleteById(2);
+box.deleteAll();
