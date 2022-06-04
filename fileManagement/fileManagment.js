@@ -9,7 +9,7 @@ class Container {
             productsFile = JSON.parse(productsFile);
             box.id = productsFile.length + 1;
             productsFile.push(box);
-            console.log(productsFile);
+            console.log("save: ", productsFile);
             fs.promises.writeFile('./products.txt', JSON.stringify(productsFile));
             return productsFile;
         } catch (error) {
@@ -24,10 +24,10 @@ class Container {
             productsFile = JSON.parse(productsFile);
             let getItem = productsFile.filter(item => item.id === id);
             if(getItem.length === 1) {
-                console.log(getItem);
+                console.log("getById: ", getItem);
                 return getItem;
             } else {
-                console.log("Get by id " + null);
+                console.log("getById: ", null);
                 return null;
             }   
         } catch (error) {
@@ -40,7 +40,7 @@ class Container {
             let productsFile = await fs.promises.writeFile('./products.txt', JSON.stringify(productsContainer));
             productsFile = await fs.promises.readFile('./products.txt', 'utf-8');
             productsFile = JSON.parse(productsFile);
-            console.log(productsFile);
+            console.log("getAll: ", productsFile);
             return productsFile;   
         } catch (error) {
             console.log(`Error getAll method: ${error}`);
@@ -52,12 +52,8 @@ class Container {
             let productsFile = await fs.promises.writeFile('./products.txt', JSON.stringify(productsContainer));
             productsFile = await fs.promises.readFile('./products.txt', 'utf-8');
             productsFile = JSON.parse(productsFile);
-            for(let i=0; i < productsFile.length; i++) {
-                if(productsFile[i].id === id) {
-                    productsFile.splice(i, 1);
-                } 
-            }
-            console.log(productsFile);
+            productsFile = productsFile.filter(prod => prod.id !== id);
+            console.log("deleteById: ", productsFile);
             await fs.promises.writeFile('./products.txt', JSON.stringify(productsFile));
             return productsFile;      
         } catch (error) {
@@ -71,7 +67,7 @@ class Container {
             productsFile = await fs.promises.readFile('./products.txt', 'utf-8');
             productsFile = JSON.parse(productsFile);
             productsFile.splice(0, productsFile.length);
-            console.log(productsFile);
+            console.log("deleteAll: ", productsFile);
             return productsFile;
         } catch (error) {
             console.log(`Error deleteAll method: ${error}`);
