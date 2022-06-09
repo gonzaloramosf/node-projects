@@ -18,6 +18,7 @@ class Container {
         }
     }
 
+
     async getRandomProduct() {
         try {
             let productsFile = await fs.promises.writeFile('./products.txt', JSON.stringify(productsContainer));
@@ -34,13 +35,13 @@ class Container {
 
 let box = new Container();
 
-app.get('/products', (req, res) => {
-    let getAll = box.getAll();
+app.get('/products', async (req, res) => {
+    let getAll = await box.getAll();
     res.json(getAll);
 })
-app.get('/productRandom', (req, res) => {
-    let productRandom = box.getRandomProduct();
-    res.json(productRandom);
+app.get('/randomProduct', async (req, res) => {
+    let randomProduct = await box.getRandomProduct();
+    res.json(randomProduct);
 })
 
 app.listen(port, (error) => {
