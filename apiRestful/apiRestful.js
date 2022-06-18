@@ -1,18 +1,13 @@
 const express = require('express');
-const app = express();
-const rutas = require('./routes/index');
+const routes = require('./routes/routes');
 
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('upload'));
+app.use('/html', express.static(__dirname + '/html'));
 
-app.use('/api', rutas);
-
-app.use((error, req, res) => {
-    console.log(error.message);
-    res.status(error.statusCode).send(error.message);
-})
+app.use('/api', routes);
 
 app.listen(8080, () => {
-    console.log('Serdvidor escuchando el puerto 8080');
+    console.log('Server on port 8080');
 })
