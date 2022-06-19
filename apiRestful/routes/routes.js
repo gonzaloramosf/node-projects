@@ -21,7 +21,7 @@ router.post('/products', async(req, res) => {
 
 router.put('/products/:id', async(req, res) => {
     let productId = req.params.id;
-    const {title, price} = req.body.params;
+    const {title, price} = req.body;
     await product.updateProductById(productId, {title, price});
     res.json(201);
 })

@@ -12,7 +12,7 @@ class Products {
 
     async getProductById(id) {
         try {
-            let product = products.find(product => product.id === id);
+            let product = products.find(product => product.id === parseInt(id));
             return product;
         } catch (error) {
             console.log(error);
@@ -33,7 +33,7 @@ class Products {
         try {
             let index = products.map(item => {
                 return item.id;
-            }).indexOf(id);
+            }).indexOf(parseInt(id));
             products[index].title = data.title;
             products[index].price = data.price;
             console.log(products);
