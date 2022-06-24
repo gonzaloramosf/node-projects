@@ -1,0 +1,13 @@
+<a href="/api/"> click to add product </a>
+<% if(hasAny) { %>
+    <ul>
+        <% products.forEach(product => { %>
+            <li>
+                title: <%= product.title %> <br>
+                price: <%= product.price %> <br>
+            </li>
+        <% }) %>
+    </ul>
+<% } else { %>
+    <p style="color: red;"> No products added! </p>
+<% } %>
