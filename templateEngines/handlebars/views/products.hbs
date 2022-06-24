@@ -1,0 +1,10 @@
+{{#if hasAny}}
+    <ul>
+        {{#each products}}
+            <li> {{this.title}} </li>
+            <li> {{this.price}} </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p> No products added! </p>
+{{/if}}
