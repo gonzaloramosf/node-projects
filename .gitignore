@@ -2,9 +2,5 @@
 /.idea
 
 # node_modules
-./apiRestful/node_modules
-./serverWithExpress/node_modules
-./templateEngines/ejs/node_modules
-./templateEngines/pug/node_modules
-./templateEngines/handlebars/node_modules
-./webSockects/node_modules
+node_modules/
+node_modules
