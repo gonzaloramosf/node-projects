@@ -8,6 +8,8 @@ app.use('/html', express.static(__dirname + '/html'));
 
 app.use('/api', routes);
 
-app.listen(8080, () => {
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => {
     console.log('Server on port 8080');
 })

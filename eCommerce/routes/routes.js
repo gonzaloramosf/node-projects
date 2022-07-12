@@ -12,19 +12,31 @@ let rol = false;
 
 // user route
 router.post("/user", async(req, res) => {
-    const {name, rol} = req.body;
-    await user.setUser({name, rol});
-    res.json(201);
+    try {
+        const {name, rol} = req.body;
+        await user.setUser({name, rol});
+        res.json(201);
+    } catch (err) {
+        console.log("Error trying to log in: ", err);
+    }
 })
 
 // products routes
 router.get('/products', async(req, res) => {
-    res.json(await product.getProducts());
+    try {
+        res.json(await product.getProducts());
+    } catch (err) {
+        console.log("Error trying to get products: ", err);
+    }
 })
 
 router.get('/products/:id', async(req, res) => {
-    let productId = req.params.id;
-    res.json(await product.getProductById(productId));
+    try {
+        let productId = req.params.id;
+        res.json(await product.getProductById(productId));
+    } catch (err) {
+        console.log("Error trying to get product by id: ", err);
+    }
 })
 
 router.post('/products', async(req, res) => {
